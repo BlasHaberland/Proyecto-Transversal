@@ -1,17 +1,19 @@
 package com.mycompany.proyectotrans;
 
-import Entidades.AlumnoData;
-import Entidades.Materia;
-import Entidades.MateriaData;
+import Entidades.Inscripcion;
+import Entidades.InscripcionData;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProyectoTrans {
 
-    public static void main(String[] args) {
-        AlumnoData alumnoData = new AlumnoData();
-        MateriaData materiaData = new MateriaData();
-        Materia laboratorio = new Materia("Laboratorio", 1, true);
-
-        System.out.println(materiaData.listarMateria());
+  public static void main(String[] args) {
+// LISTAR TODAS LAS INSCRIPCIONES
+    List<Inscripcion> inscripciones = new ArrayList<>();
+    InscripcionData inscripcionData = new InscripcionData();
+    inscripciones = inscripcionData.obtenerInscripciones();
+    System.out.println(inscripciones);
+//
 // DAR DE BAJA UNA MATERIA
 //      materiaData.eliminarMateria(3);
 // MODIFICAR MATERIA
@@ -47,5 +49,5 @@ public class ProyectoTrans {
 //
 // ELIMINAR ALUMNO
 //      alumnoData.eliminarAlumno(5);
-    }
+  }
 }
