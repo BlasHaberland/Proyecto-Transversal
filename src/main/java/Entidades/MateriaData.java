@@ -32,6 +32,7 @@ public class MateriaData {
             ps.close();
         } catch (SQLException ex) {
             System.err.println("Error en SQL");
+            System.out.println(ex);
         }
     }
 
@@ -54,6 +55,7 @@ public class MateriaData {
             ps.close();
         } catch (SQLException ex) {
             System.err.println("Error en SQL");
+            System.out.println(ex);
         }
         return materia;
 
@@ -99,7 +101,8 @@ public class MateriaData {
 
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error en SQL");
+            System.out.println(ex);
         }
     }
 
@@ -118,7 +121,8 @@ public class MateriaData {
 
             ps.close();
         } catch (SQLException ex) {
-            Logger.getLogger(MateriaData.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error en SQL");
+            System.out.println(ex);
         }
     }
 
@@ -144,6 +148,24 @@ public class MateriaData {
             System.err.println("Error en SQL");
             System.out.println(ex);
         }
+        return materias;
+    }
+
+    /*
+    Esta clase además de poseer los métodos que permitirán hacer un CRUD sobre la tabla Inscripcion,
+tiene métodos que permiten hacer operaciones un poco más complejas como el método
+“obtenerMateriasCursadas”, que recibiendo el id del alumno, nos retornará las materias en las que
+este está inscripto. La elección de mostrar en detalle la implementación de este método en
+particular es la suposición de que explicando cómo está construido, usted será capaz de
+implementar el resto de los métodos de la clase InscripcionData, con ayuda de este material escrito,
+los videos, debate entre los compañeros de equipo y por supuesto la colaboración de su tutor de
+clase.
+
+     */
+    public List<Materia> obtenerMateriasCursadas(int id) {
+        List<Materia> materias = new ArrayList<>();
+
+        //LOGICA ACA
         return materias;
     }
 }
