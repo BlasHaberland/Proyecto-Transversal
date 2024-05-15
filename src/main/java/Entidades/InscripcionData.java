@@ -68,4 +68,32 @@ public class InscripcionData {
     }
     return inscripciones;
   }
+  public List<Inscripcion> obtenerInscripcionesPorAlumno(int id){
+       List<Inscripcion> inscripciones = new ArrayList<>();
+
+    try {
+        String sql = "SELECT * FROM inscripciones WHERE id_Alumno = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int idInscripcion = rs.getInt("id_Inscripto");
+            int nota = rs.getInt("nota");
+            int idMateria = rs.getInt("id_Materia");
+            Materia materia = materiaData.buscarMateriaPorId(idMateria);
+            Alumno alumno = alumnoData.buscarAlumno(id);
+
+            Inscripcion inscripcion = new Inscripcion(idInscripcion, alumno, materia, nota);
+            inscripciones.add(inscripcion);
+        }
+
+        ps.close();
+    } catch (SQLException ex) {
+        System.err.println("Error MySQL");
+        System.err.println(ex);
+    }
+
+    return inscripciones;
+ }
 }
