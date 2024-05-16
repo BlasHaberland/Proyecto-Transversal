@@ -198,4 +198,19 @@ public class InscripcionData {
         }
 
     }
+
+    public void borrarInscripcionMateriaAlumno(int idAlumno, int idMateria) {
+        try {
+            String sql = "DELETE FROM inscripciones WHERE id_Alumno = ? AND id_Materia = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, idAlumno);
+            ps.setInt(2, idMateria);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            System.err.println("Error MySQL");
+            System.err.println(ex);
+        }
+    }
+
 }
