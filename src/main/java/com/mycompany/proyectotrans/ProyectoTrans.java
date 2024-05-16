@@ -1,52 +1,62 @@
 package com.mycompany.proyectotrans;
 
 import Entidades.Alumno;
+import Entidades.Inscripcion;
 import Entidades.InscripcionData;
+import Entidades.Materia;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProyectoTrans {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
+
+// ACTUALIZAR NOTA
+//       InscripcionData inscripcionData = new InscripcionData();
+//       inscripcionData.actualizarNota(2, 100, 2.4);
+//
 // LISTAR TODAS LAS INSCRIPCIONES
-//    List<Inscripcion> inscripciones = new ArrayList<>();
-//    InscripcionData inscripcionData = new InscripcionData();
-//    inscripciones = inscripcionData.obtenerInscripciones();
-//    System.out.println(inscripciones);
+//       List<Inscripcion> inscripciones = new ArrayList<>();
+//       InscripcionData inscripcionData = new InscripcionData();
+//       inscripciones = inscripcionData.obtenerInscripciones();
+//       System.out.println(inscripciones);
 //
 // LISTAR TODAS LAS INSCRIPCIONES POR ALUMNO
-//    List<Inscripcion> inscripciones = new ArrayList<>();
-//    InscripcionData inscripcionData = new InscripcionData();
-//    inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(2);
-//    System.out.println(inscripciones);
+//        List<Inscripcion> inscripciones = new ArrayList<>();
+//        InscripcionData inscripcionData = new InscripcionData();
+//        inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(2);
+//        System.out.println(inscripciones);
 //
 // LISTAR MATERIAS CURSADAS POR UN ALUMNO
-//    List<Materia> materiasCursadas = new ArrayList<>();
-//    InscripcionData inscripcionData = new InscripcionData();
-//    materiasCursadas = inscripcionData.obtenerMateriasCursadas(2);
-//    System.out.println(materiasCursadas);
+//        List<Materia> materiasCursadas = new ArrayList<>();
+//        InscripcionData inscripcionData = new InscripcionData();
+//        materiasCursadas = inscripcionData.obtenerMateriasCursadas(2);
+//        System.out.println(materiasCursadas);
 //
 // LISTAR MATERIAS NO CURSADAS POR Un ALUMNO
-//    List<Materia> materiasCursadas = new ArrayList<>();
-//    InscripcionData inscripcionData = new InscripcionData();
-//    materiasCursadas = inscripcionData.obtenerMateriasNoCursadas(2);
-//    System.out.println(materiasCursadas);
-// OBTENER ALUMNOS POR MATERIA
-    List<Alumno> alumnos = new ArrayList<>();
-    InscripcionData inscripcionData = new InscripcionData();
-    alumnos = inscripcionData.obtenerAlumnosPorMateria(4);
-    System.out.println(alumnos);
+//       List<Materia> materiasCursadas = new ArrayList<>();
+//       InscripcionData inscripcionData = new InscripcionData();
+//        materiasCursadas = inscripcionData.obtenerMateriasNoCursadas(2);
+//        System.out.println(materiasCursadas);
 //
+// OBTENER ALUMNOS POR MATERIA
+//       List<Alumno> alumnos = new ArrayList<>();
+//       InscripcionData inscripcionData = new InscripcionData();
+//       alumnos = inscripcionData.obtenerAlumnosPorMateria(4);
+//       System.out.println(alumnos);
 //
 // DAR DE BAJA UNA MATERIA
 //      materiaData.eliminarMateria(3);
+//
 // MODIFICAR MATERIA
 //      Materia materiaBuscadaPorId = materiaData.buscarMateriaPorId(3);
 //      materiaBuscadaPorId.setAnioMateria(2);
 //      materiaData.modificarMateria(materiaBuscadaPorId);
+//
 // BUSCAR MATERIA
 //      Materia materiaBuscadaPorId = materiaData.buscarMateriaPorId(3);
 //      System.out.println(materiaBuscadaPorId);
+//
 // AGREGAR MATERIA
 //      materiaData.guardarMateria(laboratorio);
 //
@@ -74,5 +84,5 @@ public class ProyectoTrans {
 //
 // ELIMINAR ALUMNO
 //      alumnoData.eliminarAlumno(5);
-  }
+    }
 }
