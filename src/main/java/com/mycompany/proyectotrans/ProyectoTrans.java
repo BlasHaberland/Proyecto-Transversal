@@ -11,9 +11,12 @@ public class ProyectoTrans {
 
     public static void main(String[] args) {
 
+// BORRAR INSCRIPCION
+//        InscripcionData inscripcionData = new InscripcionData();
+//        inscripcionData.borrarInscripcionMateriaAlumno(2, 1);
 // ACTUALIZAR NOTA
-//       InscripcionData inscripcionData = new InscripcionData();
-//       inscripcionData.actualizarNota(2, 100, 2.4);
+//        InscripcionData inscripcionData = new InscripcionData();
+//        inscripcionData.actualizarNota(2, 1, 5.0);
 //
 // LISTAR TODAS LAS INSCRIPCIONES
 //       List<Inscripcion> inscripciones = new ArrayList<>();
