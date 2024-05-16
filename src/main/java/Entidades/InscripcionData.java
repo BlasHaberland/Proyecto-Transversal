@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class InscripcionData {
     List<Inscripcion> inscripciones = new ArrayList<>();
 
     try {
-      String sql = "SELECT * FROM inscripciones";
+      String sql = "SELECT * FROM inscripciones;";
       Statement st = connection.createStatement();
       ResultSet rs = st.executeQuery(sql);
 
@@ -68,32 +69,109 @@ public class InscripcionData {
     }
     return inscripciones;
   }
-  public List<Inscripcion> obtenerInscripcionesPorAlumno(int id){
-       List<Inscripcion> inscripciones = new ArrayList<>();
+
+  public List<Inscripcion> obtenerInscripcionesPorAlumno(int id) {
+    List<Inscripcion> inscripciones = new ArrayList<>();
 
     try {
-        String sql = "SELECT * FROM inscripciones WHERE id_Alumno = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
+      String sql = "SELECT * FROM inscripciones WHERE id_Alumno = ?;";
+      PreparedStatement ps = connection.prepareStatement(sql);
+      ps.setInt(1, id);
+      ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            int idInscripcion = rs.getInt("id_Inscripto");
-            int nota = rs.getInt("nota");
-            int idMateria = rs.getInt("id_Materia");
-            Materia materia = materiaData.buscarMateriaPorId(idMateria);
-            Alumno alumno = alumnoData.buscarAlumno(id);
+      while (rs.next()) {
+        int idInscripcion = rs.getInt("id_Inscripto");
+        int nota = rs.getInt("nota");
+        int idMateria = rs.getInt("id_Materia");
+        Materia materia = materiaData.buscarMateriaPorId(idMateria);
+        Alumno alumno = alumnoData.buscarAlumno(id);
 
-            Inscripcion inscripcion = new Inscripcion(idInscripcion, alumno, materia, nota);
-            inscripciones.add(inscripcion);
-        }
+        Inscripcion inscripcion = new Inscripcion(idInscripcion, alumno, materia, nota);
+        inscripciones.add(inscripcion);
+      }
 
-        ps.close();
+      ps.close();
     } catch (SQLException ex) {
-        System.err.println("Error MySQL");
-        System.err.println(ex);
+      System.err.println("Error MySQL");
+      System.err.println(ex);
     }
 
     return inscripciones;
- }
+  }
+
+  public List<Materia> obtenerMateriasCursadas(int id) {
+    List<Materia> materiasCursadas = new ArrayList<>();
+    try {
+      // String sql = "SELECT * FROM inscripciones JOIN materias ON(inscripciones.id_Materia = materias.id_Materia) WHERE id_Alumno = ?;";
+      String sql = "SELECT id_Materia, nombre, año, estado FROM materias WHERE id_Materia IN(SELECT id_Materia FROM inscripciones WHERE id_Alumno = ?)";
+      PreparedStatement ps = connection.prepareStatement(sql);
+      ps.setInt(1, id);
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        int idMateria = rs.getInt("id_Materia");
+        String nombre = rs.getString("nombre");
+        int anio = rs.getInt("año");
+        boolean estado = rs.getBoolean("estado");
+
+        Materia materia = new Materia(idMateria, nombre, idMateria, estado);
+        materiasCursadas.add(materia);
+      }
+    } catch (SQLException ex) {
+      System.err.println("Error MySQL");
+      System.err.println(ex);
+    }
+    return materiasCursadas;
+  }
+
+  public List<Materia> obtenerMateriasNoCursadas(int id) {
+    List<Materia> materiasNoCursadas = new ArrayList<>();
+    try {
+      String sql = "SELECT id_Materia, nombre, año, estado FROM materias WHERE id_Materia NOT IN(SELECT id_Materia FROM inscripciones WHERE id_Alumno = ?)";
+      PreparedStatement ps = connection.prepareStatement(sql);
+      ps.setInt(1, id);
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        int idMateria = rs.getInt("id_Materia");
+        String nombre = rs.getString("nombre");
+        int anio = rs.getInt("año");
+        boolean estado = rs.getBoolean("estado");
+
+        Materia materia = new Materia(idMateria, nombre, idMateria, estado);
+        materiasNoCursadas.add(materia);
+      }
+    } catch (SQLException ex) {
+      System.err.println("Error MySQL");
+      System.err.println(ex);
+    }
+    return materiasNoCursadas;
+  }
+
+  public List<Alumno> obtenerAlumnosPorMateria(int id) {
+    List<Alumno> alumnos = new ArrayList<>();
+    try {
+      String sql = "SELECT id_Alumno, dni, nombre, apellido, fecha_Nacimiento, estado FROM alumnos WHERE id_Alumno IN(SELECT id_Alumno FROM inscripciones WHERE id_Materia = ?);";
+      PreparedStatement ps = connection.prepareStatement(sql);
+      ps.setInt(1, id);
+      ResultSet rs = ps.executeQuery();
+
+      while (rs.next()) {
+        int idAlumno = rs.getInt("id_Alumno");
+        int dni = rs.getInt("dni");
+        String apellido = rs.getString("apellido");
+        String nombre = rs.getString("nombre");
+        LocalDate fechaNac = rs.getDate("fecha_Nacimiento").toLocalDate();
+        boolean estado = rs.getBoolean("estado");
+
+        Alumno alumno = new Alumno(idAlumno, dni, apellido, nombre, fechaNac, estado);
+        alumnos.add(alumno);
+      }
+
+    } catch (SQLException ex) {
+      System.err.println("Error MySQL");
+      System.err.println(ex);
+    }
+    return alumnos;
+  }
 }

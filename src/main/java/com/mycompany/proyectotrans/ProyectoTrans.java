@@ -1,6 +1,6 @@
 package com.mycompany.proyectotrans;
 
-import Entidades.Inscripcion;
+import Entidades.Alumno;
 import Entidades.InscripcionData;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,34 @@ public class ProyectoTrans {
 
   public static void main(String[] args) {
 // LISTAR TODAS LAS INSCRIPCIONES
-    List<Inscripcion> inscripciones = new ArrayList<>();
+//    List<Inscripcion> inscripciones = new ArrayList<>();
+//    InscripcionData inscripcionData = new InscripcionData();
+//    inscripciones = inscripcionData.obtenerInscripciones();
+//    System.out.println(inscripciones);
+//
+// LISTAR TODAS LAS INSCRIPCIONES POR ALUMNO
+//    List<Inscripcion> inscripciones = new ArrayList<>();
+//    InscripcionData inscripcionData = new InscripcionData();
+//    inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(2);
+//    System.out.println(inscripciones);
+//
+// LISTAR MATERIAS CURSADAS POR UN ALUMNO
+//    List<Materia> materiasCursadas = new ArrayList<>();
+//    InscripcionData inscripcionData = new InscripcionData();
+//    materiasCursadas = inscripcionData.obtenerMateriasCursadas(2);
+//    System.out.println(materiasCursadas);
+//
+// LISTAR MATERIAS NO CURSADAS POR Un ALUMNO
+//    List<Materia> materiasCursadas = new ArrayList<>();
+//    InscripcionData inscripcionData = new InscripcionData();
+//    materiasCursadas = inscripcionData.obtenerMateriasNoCursadas(2);
+//    System.out.println(materiasCursadas);
+// OBTENER ALUMNOS POR MATERIA
+    List<Alumno> alumnos = new ArrayList<>();
     InscripcionData inscripcionData = new InscripcionData();
-    inscripciones = inscripcionData.obtenerInscripciones();
-    System.out.println(inscripciones);
+    alumnos = inscripcionData.obtenerAlumnosPorMateria(4);
+    System.out.println(alumnos);
+//
 //
 // DAR DE BAJA UNA MATERIA
 //      materiaData.eliminarMateria(3);
@@ -25,6 +49,7 @@ public class ProyectoTrans {
 //      System.out.println(materiaBuscadaPorId);
 // AGREGAR MATERIA
 //      materiaData.guardarMateria(laboratorio);
+//
 // INSERTAR ALUMNO
 //      Alumno alumnoNuevo = new Alumno(41336432, "Fernandez", "Fernando", LocalDate.of(2000, Month.MARCH, 21), true);
 //      alumnoData.guardarAlumno(alumnoNuevo);
