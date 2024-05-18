@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Vistas;
 
-/**
- *
- * @author alamb
- */
+import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
+import javax.swing.JInternalFrame;
+
 public class Principal extends javax.swing.JFrame {
 
   /**
@@ -15,6 +11,14 @@ public class Principal extends javax.swing.JFrame {
    */
   public Principal() {
     initComponents();
+
+    // Agregamos al JMenu "menuSalir" un escuchador de eventos de mouse para
+    // detectar cuando se haga click sobre él
+    menuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        clickEnMenuSalir(evt);
+      }
+    });
   }
 
   /**
@@ -40,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
     menuSalir = new javax.swing.JMenu();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
     javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
     escritorio.setLayout(escritorioLayout);
@@ -84,11 +89,21 @@ public class Principal extends javax.swing.JFrame {
     jMenu4.setText("Consultas");
 
     menuAlumnosPorMateria.setText("Alumnos por Materia");
+    menuAlumnosPorMateria.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuAlumnosPorMateriaActionPerformed(evt);
+      }
+    });
     jMenu4.add(menuAlumnosPorMateria);
 
     jMenuBar1.add(jMenu4);
 
     menuSalir.setText("Salir");
+    menuSalir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuSalirActionPerformed(evt);
+      }
+    });
     jMenuBar1.add(menuSalir);
 
     setJMenuBar(jMenuBar1);
@@ -115,13 +130,25 @@ public class Principal extends javax.swing.JFrame {
 
   private void menuFormularioDeAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFormularioDeAlumnoActionPerformed
     // TODO add your handling code here:
-    escritorio.removeAll();
-    escritorio.repaint();
     VistaAlumno vista = new VistaAlumno();
-    vista.moveToFront();
-    vista.setVisible(true);
-    escritorio.add(vista);
+    cargarVista(vista);
   }//GEN-LAST:event_menuFormularioDeAlumnoActionPerformed
+
+  private void menuAlumnosPorMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAlumnosPorMateriaActionPerformed
+    // TODO add your handling code here:
+    VistaAlumnoPorMateria vista = new VistaAlumnoPorMateria();
+    cargarVista(vista);
+  }//GEN-LAST:event_menuAlumnosPorMateriaActionPerformed
+
+  private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
+    // TODO add your handling code here:
+    menuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        clickEnMenuSalir(evt);
+      }
+    });
+  }//GEN-LAST:event_menuSalirActionPerformed
 
   /**
    * @param args the command line arguments
@@ -153,6 +180,7 @@ public class Principal extends javax.swing.JFrame {
 
     /* Create and display the form */
     java.awt.EventQueue.invokeLater(new Runnable() {
+      @Override
       public void run() {
         new Principal().setVisible(true);
       }
@@ -173,4 +201,36 @@ public class Principal extends javax.swing.JFrame {
   private javax.swing.JMenuItem menuManipulacionDeNotas;
   private javax.swing.JMenu menuSalir;
   // End of variables declaration//GEN-END:variables
+
+  /**
+   * Carga y muestra un JInternalFrame en el contenedor principal de la
+   * aplicación. Si el JInternalFrame ya está visible, se trae al frente.
+   *
+   * @param vista El JInternalFrame que se cargará y mostrará.
+   */
+  private void cargarVista(JInternalFrame vista) {
+    escritorio.removeAll();
+    escritorio.repaint();
+    vista.moveToFront();
+    vista.setVisible(true);
+    escritorio.add(vista);
+
+    try {
+      vista.setSelected(true);
+    } catch (PropertyVetoException ex) {
+      System.out.println(ex);
+    }
+  }
+
+  /**
+   * Maneja el evento de clic en el menú "Salir". Cierra la aplicación cuando el
+   * menú "Salir" es clickeado.
+   *
+   * @param evt El evento de clic del ratón.
+   */
+  private void clickEnMenuSalir(java.awt.event.MouseEvent evt) {
+    if (evt.getButton() == MouseEvent.BUTTON1) {
+      System.exit(0);
+    }
+  }
 }
