@@ -15,6 +15,7 @@ public class Principal extends javax.swing.JFrame {
     // Agregamos al JMenu "menuSalir" un escuchador de eventos de mouse para
     // detectar cuando se haga click sobre él
     menuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+      @Override
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         clickEnMenuSalir(evt);
       }
@@ -99,11 +100,6 @@ public class Principal extends javax.swing.JFrame {
     jMenuBar1.add(jMenu4);
 
     menuSalir.setText("Salir");
-    menuSalir.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        menuSalirActionPerformed(evt);
-      }
-    });
     jMenuBar1.add(menuSalir);
 
     setJMenuBar(jMenuBar1);
@@ -139,16 +135,6 @@ public class Principal extends javax.swing.JFrame {
     VistaAlumnoPorMateria vista = new VistaAlumnoPorMateria();
     cargarVista(vista);
   }//GEN-LAST:event_menuAlumnosPorMateriaActionPerformed
-
-  private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
-    // TODO add your handling code here:
-    menuSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-      @Override
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
-        clickEnMenuSalir(evt);
-      }
-    });
-  }//GEN-LAST:event_menuSalirActionPerformed
 
   /**
    * @param args the command line arguments
