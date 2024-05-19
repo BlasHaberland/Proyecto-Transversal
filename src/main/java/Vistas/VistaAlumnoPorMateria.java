@@ -22,12 +22,12 @@ public class VistaAlumnoPorMateria extends javax.swing.JInternalFrame {
     // ComboBox.llenar(comboMaterias, materias);
     // comboMaterias.setSelectedIndex(-1);
 
-    // Creamos las cabeceras para la tabla "tablaAlumnosPorMateria" usando el
+    // Crea las cabeceras para la tabla "tablaAlumnosPorMateria" usando el
     // método estático de la clase Tabla
     Tabla.crearCabeceras(tablaAlumnosPorMateria, modelo, new String[]{"ID", "DNI", "Apellido", "Nombre"}, new int[]{50, 100, 300, 300});
 
     // Ejecuta la tarea de carga de materias en un hilo separado para no
-    // bloquea la interfaz de usuario. Cuando la carga está completada llena el
+    // bloquear la interfaz de usuario. Cuando la carga está completada llena el
     // JComboBox
     CompletableFuture.supplyAsync(() -> {
       MateriaData materiaData = new MateriaData();
@@ -85,15 +85,15 @@ public class VistaAlumnoPorMateria extends javax.swing.JInternalFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(88, 88, 88)
+        .addGap(90, 90, 90)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
-        .addComponent(comboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(88, Short.MAX_VALUE))
+        .addComponent(comboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(19, 19, 19))
+        .addContainerGap(30, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(30, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

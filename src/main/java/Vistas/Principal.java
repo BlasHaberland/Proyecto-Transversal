@@ -80,6 +80,11 @@ public class Principal extends javax.swing.JFrame {
     jMenu3.setText("Administración");
 
     menuManejoDeInscripciones.setText("Manejo de Inscripciones");
+    menuManejoDeInscripciones.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuManejoDeInscripcionesActionPerformed(evt);
+      }
+    });
     jMenu3.add(menuManejoDeInscripciones);
 
     menuManipulacionDeNotas.setText("Manipulación de Notas");
@@ -135,6 +140,12 @@ public class Principal extends javax.swing.JFrame {
     VistaAlumnoPorMateria vista = new VistaAlumnoPorMateria();
     cargarVista(vista);
   }//GEN-LAST:event_menuAlumnosPorMateriaActionPerformed
+
+  private void menuManejoDeInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuManejoDeInscripcionesActionPerformed
+    // TODO add your handling code here:
+    VistaInscripciones vista = new VistaInscripciones();
+    cargarVista(vista);
+  }//GEN-LAST:event_menuManejoDeInscripcionesActionPerformed
 
   /**
    * @param args the command line arguments
