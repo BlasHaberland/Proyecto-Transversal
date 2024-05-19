@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package Vistas;
 
 import Entidades.Alumno;
@@ -13,6 +9,7 @@ import Utilidades.ComboBox;
 import Utilidades.Tabla;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VistaInscripciones extends javax.swing.JInternalFrame {
@@ -153,12 +150,9 @@ public class VistaInscripciones extends javax.swing.JInternalFrame {
         .addComponent(jLabel2)
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(radioInscriptas)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(radioNoInscriptas)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+          .addComponent(radioInscriptas)
+          .addComponent(radioNoInscriptas))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addGap(0, 27, Short.MAX_VALUE)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +188,7 @@ public class VistaInscripciones extends javax.swing.JInternalFrame {
             .addComponent(jLabel2)))
         .addGap(37, 37, 37)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(botonInscribir)
           .addComponent(botonAnularInscripcion))
@@ -247,26 +241,45 @@ public class VistaInscripciones extends javax.swing.JInternalFrame {
 
     // Guarda la inscripción en la base de datos
     InscripcionData inscripciónData = new InscripcionData();
-    inscripciónData.guardarInscripcion(inscripcion);
+    boolean res = inscripciónData.guardarInscripcion(inscripcion);
 
     // Se selecciona por defecto el radio botón de "inscriptas"
     radioInscriptas.setSelected(true);
 
     // Llama al método que renderiza la tabla
     renderizarTablaDeMaterias();
+
+    // Muestra un mensase de díalogo, dependiendo la respuesta.
+    if (res) {
+      JOptionPane.showMessageDialog(this, "Inscripción realizada");
+    } else {
+      JOptionPane.showMessageDialog(this, "Hubo un problema al realizar la inscripción");
+    }
   }//GEN-LAST:event_botonInscribirActionPerformed
 
   private void botonAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnularInscripcionActionPerformed
     // TODO add your handling code here:
+    // Obtiene el alumno del JComboBox
     Alumno alumno = (Alumno) comboAlumnos.getSelectedItem();
 
+    // Obtiene los datos de la materia a partir de la fila de la tabla
+    // seleccionada
     int fila = tablaMaterias.getSelectedRow();
     int idMateria = (int) tablaMaterias.getModel().getValueAt(fila, 0);
 
+    // Instancia un objeto Inscripcion
     InscripcionData inscripciónData = new InscripcionData();
-    inscripciónData.borrarInscripcionMateriaAlumno(alumno.getIdAlumno(), idMateria);
+    boolean res = inscripciónData.borrarInscripcionMateriaAlumno(alumno.getIdAlumno(), idMateria);
 
+    // Llama al método que renderiza la tabla
     renderizarTablaDeMaterias();
+
+    // Muestra un mensase de díalogo, dependiendo la respuesta.
+    if (res) {
+      JOptionPane.showMessageDialog(this, "Inscripción anulada");
+    } else {
+      JOptionPane.showMessageDialog(this, "Hubo un problema al anular la inscripción");
+    }
   }//GEN-LAST:event_botonAnularInscripcionActionPerformed
 
   private void tablaMateriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMateriasMouseClicked

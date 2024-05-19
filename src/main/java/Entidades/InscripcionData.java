@@ -12,8 +12,8 @@ import java.util.List;
 public class InscripcionData {
 
   private final Connection connection;
-  private AlumnoData alumnoData;
-  private MateriaData materiaData;
+  private final AlumnoData alumnoData;
+  private final MateriaData materiaData;
 
   public InscripcionData() {
     DBConnection instance = DBConnection.getInstance();
@@ -22,19 +22,24 @@ public class InscripcionData {
     this.materiaData = new MateriaData();
   }
 
-  public void guardarInscripcion(Inscripcion inscripcion) {
+  public boolean guardarInscripcion(Inscripcion inscripcion) {
+    int res = 0;
     try {
       String sql = "INSERT INTO inscripciones(nota, id_Alumno, id_Materia) VALUES(?, ?, ?)";
       PreparedStatement ps = this.connection.prepareStatement(sql);
       ps.setDouble(1, inscripcion.getNota());
       ps.setInt(2, inscripcion.getAlumno().getIdAlumno());
       ps.setInt(3, inscripcion.getMateria().getIdMateria());
-      ps.execute();
 
+      res = ps.executeUpdate();
       ps.close();
+
+      return res != 0;
     } catch (SQLException ex) {
       System.err.println("Error MySQL");
       System.err.println(ex);
+
+      return res != 0;
     }
   }
 
@@ -114,7 +119,7 @@ public class InscripcionData {
         int anio = rs.getInt("año");
         boolean estado = rs.getBoolean("estado");
 
-        Materia materia = new Materia(idMateria, nombre, idMateria, estado);
+        Materia materia = new Materia(idMateria, nombre, anio, estado);
         materiasCursadas.add(materia);
       }
 
@@ -140,7 +145,7 @@ public class InscripcionData {
         int anio = rs.getInt("año");
         boolean estado = rs.getBoolean("estado");
 
-        Materia materia = new Materia(idMateria, nombre, idMateria, estado);
+        Materia materia = new Materia(idMateria, nombre, anio, estado);
         materiasNoCursadas.add(materia);
       }
 
@@ -189,7 +194,7 @@ public class InscripcionData {
       ps.setInt(2, idAlumno);
       ps.setInt(3, idMateria);
 
-      boolean exito = ps.execute();
+      ps.execute();
       ps.close();
 
     } catch (SQLException ex) {
@@ -199,18 +204,23 @@ public class InscripcionData {
 
   }
 
-  public void borrarInscripcionMateriaAlumno(int idAlumno, int idMateria) {
+  public boolean borrarInscripcionMateriaAlumno(int idAlumno, int idMateria) {
+    int res = 0;
     try {
       String sql = "DELETE FROM inscripciones WHERE id_Alumno = ? AND id_Materia = ?";
       PreparedStatement ps = connection.prepareStatement(sql);
       ps.setInt(1, idAlumno);
       ps.setInt(2, idMateria);
-      ps.executeUpdate();
+      res = ps.executeUpdate();
       ps.close();
+
+      return res != 0;
+
     } catch (SQLException ex) {
       System.err.println("Error MySQL");
       System.err.println(ex);
+
+      return false;
     }
   }
-
 }
