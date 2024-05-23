@@ -37,7 +37,7 @@ public class MateriaData {
   public Materia buscarMateriaPorId(int id) {
     Materia materia = null;
     try {
-      String sql = "SELECT * FROM materias WHERE estado = 1 AND id_Materia = ?";
+      String sql = "SELECT * FROM materias WHERE id_Materia = ?";
       PreparedStatement ps = connection.prepareStatement(sql);
       ps.setInt(1, id);
       ResultSet rs = ps.executeQuery();
@@ -46,8 +46,9 @@ public class MateriaData {
         int idMateria = rs.getInt("id_Materia");
         String name = rs.getString("nombre");
         int anio = rs.getInt("año");
+        boolean estado = rs.getBoolean("estado");
 
-        materia = new Materia(idMateria, name, anio, true);
+        materia = new Materia(idMateria, name, anio, estado);
       }
 
       ps.close();
