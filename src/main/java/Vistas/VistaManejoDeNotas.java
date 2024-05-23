@@ -11,11 +11,14 @@ import Entidades.InscripcionData;
 
 import Utilidades.ComboBox;
 import Utilidades.Tabla;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -70,8 +73,9 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
         comboAlumnos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMaterias = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jBActualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jTexto = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Notas");
@@ -111,25 +115,30 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tablaMaterias);
 
-        jButton1.setText("Guardar");
-        jButton1.setMaximumSize(new java.awt.Dimension(61, 27));
-        jButton1.setMinimumSize(new java.awt.Dimension(61, 27));
-        jButton1.setPreferredSize(new java.awt.Dimension(61, 27));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBActualizar.setText("Actualizar");
+        jBActualizar.setMaximumSize(new java.awt.Dimension(61, 27));
+        jBActualizar.setMinimumSize(new java.awt.Dimension(61, 27));
+        jBActualizar.setPreferredSize(new java.awt.Dimension(61, 27));
+        jBActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBActualizarActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jLabel2.setText("Materias cursadas");
 
+        jTexto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTexto.setForeground(new java.awt.Color(16, 88, 34));
+        jTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jTexto.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,15 +146,18 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(297, 297, 297)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(310, 310, 310)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(jTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,13 +166,15 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(18, 18, 18)
+                .addComponent(jBActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,7 +199,7 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaMateriasMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         // TODO add your handling code here:
 
         InscripcionData inscripcionData = new InscripcionData();
@@ -209,24 +223,28 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
 
         if (!bandera) {
             if (filasModificadas.size() == 1) {
-                JOptionPane.showMessageDialog(this, "Nota actualizada");
+                jTexto.setText(filasModificadas.size() + " fila fue modificada");
+                // JOptionPane.showMessageDialog(this, "Nota actualizada");
             } else {
-                JOptionPane.showMessageDialog(this, "Notas actualizadas");
+                jTexto.setText(filasModificadas.size() + " filas fueron modificadas");
+                //JOptionPane.showMessageDialog(this, "Notas actualizadas");
             }
+            // Define la duración en milisegundos (por ejemplo, 3 segundos)
         } else {
             JOptionPane.showMessageDialog(this, "Hubo un problema al actualizar la/s nota/s");
         }
 
         // Limpia la lista de filasModificadas
         filasModificadas.clear();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBActualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Alumno> comboAlumnos;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jTexto;
     private javax.swing.JTable tablaMaterias;
     // End of variables declaration//GEN-END:variables
     private Set<Integer> filasModificadas = new HashSet<>();
