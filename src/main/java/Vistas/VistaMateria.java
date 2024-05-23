@@ -4,13 +4,17 @@
  * and open the template in the editor.
  */
 package Vistas;
+import Entidades.MateriaData;
+import Entidades.Materia;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author pc202
  */
 public class VistaMateria extends javax.swing.JInternalFrame {
-
+private MateriaData MData = new MateriaData();
+private Materia MActual = null;
     /**
      * Creates new form VistaMateria
      */
@@ -53,14 +57,39 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jLEstado.setText("Estado:");
 
         jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
         jBNuevo.setText("Nuevo");
+        jBNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNuevoActionPerformed(evt);
+            }
+        });
 
         jBEliminar.setText("Eliminar");
+        jBEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBEliminarActionPerformed(evt);
+            }
+        });
 
         jBGuardar.setText("Guardar");
+        jBGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBGuardarActionPerformed(evt);
+            }
+        });
 
         jBSalir.setText("Salir");
+        jBSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,6 +172,80 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        // TODO add your handling code here:
+        try{
+             Integer codigo = Integer.parseInt(jTFCodigo.getText());
+             MActual=MData.buscarMateriaPorId(codigo);
+             if(MActual!=null){
+                 jTFNombre.setText(MActual.getNombre());
+                 Integer Anio=Integer.parseInt(jTFAño.getText());
+                 jRBEstado.setSelected(MActual.isActivo());
+             }
+        }catch(NumberFormatException ex){
+         JOptionPane.showMessageDialog(this,"Debe ingresar un Numero valido");
+        }
+        
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
+        // TODO add your handling code here:
+        LimpiarCampos();
+        MActual=null;
+    }//GEN-LAST:event_jBNuevoActionPerformed
+
+    private void jBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEliminarActionPerformed
+        // TODO add your handling code here:
+        if(MActual!=null){
+            MData.eliminarMateria(MActual.getIdMateria());
+            MActual=null;
+            LimpiarCampos();
+        }else{
+             JOptionPane.showMessageDialog(this,"No hay un Materia seleccionada");           
+        }
+    }//GEN-LAST:event_jBEliminarActionPerformed
+
+    private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
+        // TODO add your handling code here:
+        try{
+        Integer codigo = Integer.parseInt(jTFCodigo.getText());
+         String nombre=jTFNombre.getText();
+         Integer Anio=Integer.parseInt(jTFAño.getText());
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
+            return;
+        }
+        boolean estado=jRBEstado.isSelected();
+        if(MActual==null){
+            MActual=new Materia(codigo,nombre,Anio,estado);
+            MData.guardarMateria(MActual);
+            
+        }else{
+            MActual.setIdMateria(codigo);
+            MActual.setNombre(nombre);
+            MActual.setAnioMateria(Anio);
+            MData.modificarMateria(MActual);
+            
+        }
+        
+        }catch(NumberFormatException nfe){
+           JOptionPane.showMessageDialog(this,"Debe ingresar un Numero valido");
+        }
+        
+        
+    }//GEN-LAST:event_jBGuardarActionPerformed
+
+    private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jBSalirActionPerformed
+    
+    private void LimpiarCampos(){
+        jTFCodigo.setText("");
+        jTFNombre.setText("");
+        jTFAño.setText("");
+        jRBEstado.setSelected(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
