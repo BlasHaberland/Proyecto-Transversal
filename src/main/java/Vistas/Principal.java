@@ -71,6 +71,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setText("Materia");
 
         menuFormularioDeMateria.setText("Formulario de Materia");
+        menuFormularioDeMateria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFormularioDeMateriaActionPerformed(evt);
+            }
+        });
         jMenu1.add(menuFormularioDeMateria);
 
         jMenuBar1.add(jMenu1);
@@ -155,6 +160,12 @@ public class Principal extends javax.swing.JFrame {
         VistaManejoDeNotas vista = new VistaManejoDeNotas();
         cargarVista(vista);
     }//GEN-LAST:event_menuManipulacionDeNotasActionPerformed
+
+    private void menuFormularioDeMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFormularioDeMateriaActionPerformed
+        // TODO add your handling code here:
+        VistaMateria vista = new VistaMateria();
+        cargarVista(vista);
+    }//GEN-LAST:event_menuFormularioDeMateriaActionPerformed
 
     /**
      * @param args the command line arguments
