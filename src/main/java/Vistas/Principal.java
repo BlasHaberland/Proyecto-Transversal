@@ -43,6 +43,7 @@ public class Principal extends javax.swing.JFrame {
         menuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Universidad");
         setResizable(false);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
@@ -139,7 +140,7 @@ public class Principal extends javax.swing.JFrame {
 
   private void menuFormularioDeAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFormularioDeAlumnoActionPerformed
         // TODO add your handling code here:
-        VistaAlumno vista = new VistaAlumno();
+        VistaAlumnos vista = new VistaAlumnos();
         cargarVista(vista);
   }//GEN-LAST:event_menuFormularioDeAlumnoActionPerformed
 

@@ -8,12 +8,16 @@ import Entidades.Alumno;
 import Entidades.AlumnoData;
 import Entidades.Inscripcion;
 import Entidades.InscripcionData;
-import Entidades.Materia;
+
 import Utilidades.ComboBox;
 import Utilidades.Tabla;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,6 +41,22 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
         });
 
         Tabla.crearCabeceras(tablaMaterias, modelo, new String[]{"id", "Nombre", "Nota"}, new int[]{75, 400, 400});
+
+        // Agrega un TableModelListener al modelo para escuchar cambios en la tabla
+        modelo.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // Verifica si el evento de cambio es una actualización de una celda
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    // Obtiene el índice de la primera fila modificada
+                    int fila = e.getFirstRow();
+                    // Añade la fila modificada a la lista de filas modificadas
+                    filasModificadas.add(fila);
+                    // Imprime un mensaje en la consola indicando la fila que fue modificada
+                    System.out.println("Fila modificada: " + fila);
+                }
+            }
+        });
     }
 
     /**
@@ -51,6 +71,7 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMaterias = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Notas");
@@ -100,12 +121,15 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel2.setText("Materias cursadas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(105, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,12 +137,15 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(297, 297, 297)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(297, 297, 297)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,11 +154,13 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(comboAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(50, 50, 50)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addGap(56, 56, 56))
         );
 
         pack();
@@ -141,7 +170,6 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
 
         Tabla.limpiarTabla(modelo);
 
-        //System.out.println(((Alumno) comboAlumnos.getSelectedItem()).getIdAlumno());
         InscripcionData inscripcionData = new InscripcionData();
         List<Inscripcion> inscripciones = inscripcionData.obtenerInscripcionesPorAlumno(((Alumno) comboAlumnos.getSelectedItem()).getIdAlumno());
 
@@ -159,39 +187,50 @@ public class VistaManejoDeNotas extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        int cantFilas = tablaMaterias.getModel().getRowCount();
-        //System.out.println(cantFilas);
+
         InscripcionData inscripcionData = new InscripcionData();
         boolean bandera = false;
 
-        for (int i = 0; i < cantFilas; i++) {
+        //Recorre cada fila modificada dentro del HashSet filasModificadas
+        for (int fila : filasModificadas) {
+            //Obtenemos el id del alumno seleccionado del comboBox
             int idAlumno = ((Alumno) comboAlumnos.getSelectedItem()).getIdAlumno();
-            int idMateria = (int) tablaMaterias.getModel().getValueAt(i, 0);
-            double nota = Double.parseDouble(tablaMaterias.getModel().getValueAt(i, 2).toString());
+            //Obtenemos los datos de la tabla
+            int idMateria = (int) tablaMaterias.getModel().getValueAt(fila, 0);
+            double nota = Double.parseDouble(tablaMaterias.getModel().getValueAt(fila, 2).toString());
 
+            // Actualiza la nota del alumno en la base de datos
             boolean res = inscripcionData.actualizarNota(idAlumno, idMateria, nota);
-
+            // Si la actualización de la nota falla, se establece la bandera a true
             if (!res) {
                 bandera = true;
             }
         }
 
         if (!bandera) {
-            JOptionPane.showMessageDialog(this, "Nota/s actualizada/s");
+            if (filasModificadas.size() == 1) {
+                JOptionPane.showMessageDialog(this, "Nota actualizada");
+            } else {
+                JOptionPane.showMessageDialog(this, "Notas actualizadas");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Hubo un problema al actualizar la/s nota/s");
         }
+
+        // Limpia la lista de filasModificadas
+        filasModificadas.clear();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Alumno> comboAlumnos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaMaterias;
     // End of variables declaration//GEN-END:variables
+    private Set<Integer> filasModificadas = new HashSet<>();
 
-    //private final DefaultTableModel modelo = new DefaultTableModel();
     private final DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int col) {
