@@ -2,6 +2,8 @@ package Vistas;
 
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JInternalFrame;
 
 public class Principal extends javax.swing.JFrame {
